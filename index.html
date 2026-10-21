@@ -1,0 +1,1167 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paperkun – Çocuklar için çizgi film, kitap ve oyunlar</title>
+<meta name="description" content="Paperkun kağıttan bir çizgi film kahramanı. Bölümleri izle, origami katla, resimli kitap oku, boyama yap ve mini oyunlar oyna.">
+<meta name="theme-color" content="#F7931E">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Paperkun">
+<meta property="og:title" content="Paperkun – Çocuklar için çizgi film, kitap ve oyunlar">
+<meta property="og:description" content="İzle, katla, oku ve oyna! Paperkun ile kağıttan maceralar.">
+<meta property="og:url" content="https://paperkun.com/">
+<meta property="og:image" content="https://paperkun.com/img/og.png">
+<meta property="og:locale" content="tr_TR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;700;800&family=Patrick+Hand&display=swap">
+<style>
+/* Layout: origami paper sheets laid on a graph-paper table; every button and card is a folded sheet with a dog-eared corner. Single light theme by choice (paper world). */
+:root{
+  --table:#F6F8FC;      /* graph-paper table */
+  --grid:#DCE6F5;
+  --paper:#FFFFFF;
+  --ink:#2B2240;        /* outline ink, same as character outlines */
+  --ink-soft:#5D5577;
+  --orange:#F7931E;     /* Paperkun's hair */
+  --orange-d:#C96F0C;
+  --purple:#6B3FA0;     /* Paperkun's eyes */
+  --purple-d:#4C2A78;
+  --teal:#1A9CC0;
+  --teal-d:#12779A;
+  --sun:#FFC93C;
+  --sun-d:#D9A01A;
+  --pink:#FF8FA8;
+  --f-display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Nunito","Segoe UI",system-ui,sans-serif;
+  --f-hand:"Patrick Hand","Comic Sans MS",cursive;
+  --fold:22px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+[id]{scroll-margin-top:84px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{
+  margin:0;background:var(--table);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--purple);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);line-height:1.08;margin:0;text-wrap:balance}
+h2{font-size:clamp(2rem,4.4vw,3rem);font-weight:800}
+.hand{font-family:var(--f-hand);font-size:1.25rem;color:var(--ink-soft)}
+
+/* ---------- Origami button: folded sheet with a dog-ear ---------- */
+.btn{
+  --c:var(--orange);--cd:var(--orange-d);--tx:var(--ink);
+  position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:.5em;
+  font:800 1.15rem/1 var(--f-display);color:var(--tx);text-decoration:none;border:0;background:none;cursor:pointer;
+  padding:.85em 1.7em .75em 1.3em;filter:drop-shadow(3px 4px 0 rgba(43,34,64,.22));
+  transition:transform .15s ease,filter .15s ease;
+}
+.btn::before{ /* the sheet */
+  content:"";position:absolute;inset:0;z-index:-1;background:var(--c);
+  clip-path:polygon(0 0,calc(100% - var(--fold)) 0,100% var(--fold),100% 100%,0 100%);
+  transition:clip-path .25s ease;
+}
+.btn::after{ /* the folded-down corner, showing the paper's lighter back */
+  content:"";position:absolute;top:0;right:0;width:var(--fold);height:var(--fold);z-index:-1;
+  background:linear-gradient(225deg,transparent 50%,var(--cd) 50%,color-mix(in srgb,var(--c) 55%,#fff) 58%);
+  transition:width .25s ease,height .25s ease;
+}
+.btn:hover{transform:translate(-1px,-2px) rotate(-1deg);filter:drop-shadow(5px 7px 0 rgba(43,34,64,.22))}
+.btn:hover::before{clip-path:polygon(0 0,calc(100% - 32px) 0,100% 32px,100% 100%,0 100%)}
+.btn:hover::after{width:32px;height:32px}
+.btn:active{transform:translate(2px,3px);filter:drop-shadow(1px 1px 0 rgba(43,34,64,.22))}
+.btn.purple{--c:var(--purple);--cd:var(--purple-d);--tx:#fff}
+.btn.teal{--c:var(--teal);--cd:var(--teal-d);--tx:#fff}
+.btn.sun{--c:var(--sun);--cd:var(--sun-d)}
+.btn.paper{--c:var(--paper);--cd:#C9D3E6}
+.btn.small{font-size:1rem;padding:.7em 1.4em .6em 1.1em;--fold:16px}
+.btn svg{width:1.1em;height:1.1em;flex:none}
+
+/* ---------- Header ---------- */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);border-bottom:3px solid var(--ink)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px}
+.logo{display:flex;align-items:center;text-decoration:none}
+.logo img{height:46px;width:auto;display:block;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.logo:hover img{transform:rotate(-2deg) scale(1.04)}
+.menu{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.tab{
+  font:700 1.02rem/1 var(--f-display);text-decoration:none;padding:.55em .8em .45em;border-radius:6px 6px 0 0;
+  border-bottom:4px solid transparent;transition:border-color .2s,background .2s;
+}
+.tab:hover{background:var(--table)}
+.tab[data-c="o"]:hover{border-color:var(--orange)}.tab[data-c="t"]:hover{border-color:var(--teal)}
+.tab[data-c="p"]:hover{border-color:var(--purple)}.tab[data-c="s"]:hover{border-color:var(--sun)}
+.lang{font:800 .9rem/1 var(--f-display);border:2.5px solid var(--ink);background:var(--paper);padding:.45em .6em .35em;border-radius:8px;cursor:pointer;color:var(--ink)}
+.lang:hover{background:var(--sun)}
+@media (max-width:720px){.menu .tab{display:none}.logo img{height:36px}}
+
+/* ---------- Hero ---------- */
+.hero{padding-block:48px 24px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
+.hero h1{font-size:clamp(2.6rem,7vw,5rem);font-weight:800;letter-spacing:-.5px}
+.hero h1 em{font-style:normal;color:var(--orange);display:inline-block;transform:rotate(-2deg)}
+.hero p.lead{font-size:1.25rem;max-width:30ch;margin:16px 0 26px;color:var(--ink-soft);font-weight:700}
+.hero .ctas{display:flex;gap:14px;flex-wrap:wrap}
+.stage{position:relative;aspect-ratio:1;max-width:460px;width:100%;justify-self:center}
+.sheet-bg{position:absolute;inset:6% 4%;background:var(--sun);transform:rotate(-5deg);
+  clip-path:polygon(0 0,calc(100% - 46px) 0,100% 46px,100% 100%,0 100%)}
+.sheet-bg::after{content:"";position:absolute;top:0;right:0;width:46px;height:46px;background:linear-gradient(225deg,transparent 50%,var(--sun-d) 50%,#FFE7A3 58%)}
+.sheet-bg2{position:absolute;inset:10% 8%;background:var(--teal);transform:rotate(4deg);opacity:.9}
+.kun{position:absolute;left:9%;top:6%;width:82%;height:auto;max-width:100%;filter:drop-shadow(6px 8px 0 rgba(43,34,64,.18));animation:bob 3.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px) rotate(1deg)}}
+.crane{position:absolute;width:90px;animation:float 6s ease-in-out infinite}
+.crane.c1{top:-2%;left:-4%}.crane.c2{bottom:4%;right:-6%;width:70px;animation-delay:-3s}
+@keyframes float{50%{transform:translateY(-10px) rotate(-4deg)}}
+.bubble{position:absolute;top:2%;right:2%;background:var(--paper);border:3px solid var(--ink);border-radius:18px;padding:8px 14px;
+  font:1.15rem/1.2 var(--f-hand);transform:rotate(4deg)}
+.bubble::after{content:"";position:absolute;left:18px;bottom:-12px;width:18px;height:18px;background:var(--paper);border-right:3px solid var(--ink);border-bottom:3px solid var(--ink);transform:rotate(45deg) skew(10deg,10deg)}
+@media (max-width:820px){.hero-grid{grid-template-columns:1fr}.stage{max-width:340px;order:-1}.hero{padding-block:28px 12px}}
+
+/* ---------- Four doors ---------- */
+.doors{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding-block:28px 56px}
+.door{
+  --c:var(--orange);--cd:var(--orange-d);--tx:var(--ink);--f:38px;
+  position:relative;isolation:isolate;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--tx);
+  padding:22px 20px 20px;min-height:220px;filter:drop-shadow(4px 5px 0 rgba(43,34,64,.2));
+  transition:transform .25s cubic-bezier(.3,1.5,.5,1);
+}
+.door::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--c);
+  clip-path:polygon(0 0,calc(100% - var(--f)) 0,100% var(--f),100% 100%,0 100%);transition:clip-path .3s ease}
+.door::after{content:"";position:absolute;top:0;right:0;width:var(--f);height:var(--f);z-index:-1;
+  background:linear-gradient(225deg,transparent 50%,var(--cd) 50%,color-mix(in srgb,var(--c) 50%,#fff) 60%);transition:width .3s,height .3s}
+.door:hover{transform:translateY(-6px) rotate(-1.5deg)}
+.door:hover::before{clip-path:polygon(0 0,calc(100% - 60px) 0,100% 60px,100% 100%,0 100%)}
+.door:hover::after{width:60px;height:60px}
+.door .crease{position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(135deg,transparent 49.6%,rgba(0,0,0,.07) 50%,transparent 50.4%)}
+.door h3{font-size:2.1rem;font-weight:800}
+.door p{margin:0;font-weight:700;opacity:.9}
+.door .go{margin-top:auto;font:800 1rem var(--f-display);display:flex;align-items:center;gap:6px}
+.door svg.ico{width:54px;height:54px}
+.door.t{--c:var(--teal);--cd:var(--teal-d);--tx:#fff}
+.door.p{--c:var(--purple);--cd:var(--purple-d);--tx:#fff}
+.door.s{--c:var(--sun);--cd:var(--sun-d)}
+@media (max-width:900px){.doors{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:460px){.doors{grid-template-columns:1fr}.door{min-height:0}}
+
+/* ---------- Sections ---------- */
+section.band{padding-block:64px}
+.band-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+.band-head p{margin:6px 0 0;max-width:52ch;font-weight:700;color:var(--ink-soft)}
+.label{display:inline-block;font:800 .82rem/1 var(--f-display);letter-spacing:.12em;text-transform:uppercase;
+  background:var(--ink);color:#fff;padding:.5em .8em .4em;margin-bottom:12px;transform:rotate(-2deg)}
+
+/* paper card generic */
+.card{--c:var(--paper);--cd:#C9D3E6;--f:26px;position:relative;isolation:isolate;padding:18px;filter:drop-shadow(3px 4px 0 rgba(43,34,64,.16))}
+.card::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--c);
+  clip-path:polygon(0 0,calc(100% - var(--f)) 0,100% var(--f),100% 100%,0 100%)}
+.card::after{content:"";position:absolute;top:0;right:0;width:var(--f);height:var(--f);z-index:-1;
+  background:linear-gradient(225deg,transparent 50%,var(--cd) 50%,#EEF2F9 60%)}
+
+/* İzle */
+.izle{background:var(--orange);border-block:3px solid var(--ink)}
+.izle .band-head p{color:var(--ink)}
+.eps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.ep{display:flex;flex-direction:column;gap:12px;text-decoration:none;transition:transform .2s}
+.ep:hover{transform:rotate(-1deg) translateY(-4px)}
+.screen{aspect-ratio:16/10;max-width:100%;border:3px solid var(--ink);border-radius:10px;display:grid;place-items:center;position:relative;overflow:hidden}
+.screen .play{width:62px;height:62px;border-radius:50%;background:var(--paper);border:3px solid var(--ink);display:grid;place-items:center;transition:transform .2s}
+.ep:hover .play{transform:scale(1.12)}
+.screen svg.deco{position:absolute;opacity:.9}
+.ep .meta{font:700 .9rem var(--f-display);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em}
+.ep h3{font-size:1.35rem}
+.ep.soon{opacity:.75;pointer-events:none}
+.tape{position:absolute;top:10px;left:-8px;background:var(--sun);font:800 .85rem/1 var(--f-display);padding:.5em 1em .4em;transform:rotate(-6deg);border:2px dashed var(--sun-d);z-index:2}
+@media (max-width:820px){.eps{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.eps{grid-template-columns:1fr}}
+
+/* Katla */
+.katla-grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:32px;align-items:start}
+@media (max-width:860px){.katla-grid{grid-template-columns:1fr}}
+.lab{text-align:center}
+.lab h3{font-size:1.5rem}
+.lab .hand{margin:4px 0 16px}
+.fold-stage{perspective:900px;width:min(260px,70vw);aspect-ratio:1;margin:8px auto 18px;position:relative}
+.sq{position:absolute;inset:0;transform-style:preserve-3d}
+.q{position:absolute;inset:0;transform-style:preserve-3d}
+.face{position:absolute;inset:0;backface-visibility:hidden}
+.face.f{background:var(--orange)}
+.face.b{background:#FFE3C2;transform:rotateY(180deg)}
+.q.top .f{clip-path:polygon(0 0,100% 0,50% 50%);background:linear-gradient(180deg,#F7931E,#F9A440)}
+.q.top .b{clip-path:polygon(100% 0,0 0,50% 50%)}
+.q.right .f{clip-path:polygon(100% 0,100% 100%,50% 50%);background:linear-gradient(270deg,#E9850F,#F7931E)}
+.q.right .b{clip-path:polygon(0 0,0 100%,50% 50%)}
+.q.bottom .f{clip-path:polygon(0 100%,100% 100%,50% 50%);background:linear-gradient(0deg,#E07D0B,#F28B17)}
+.q.bottom .b{clip-path:polygon(100% 100%,0 100%,50% 50%)}
+.q.left .f{clip-path:polygon(0 0,0 100%,50% 50%);background:linear-gradient(90deg,#FBA445,#F7931E)}
+.q.left .b{clip-path:polygon(100% 0,100% 100%,50% 50%)}
+.g1,.g2,.g1b{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.6,.05,.3,1)}
+/* step 1: top+left flaps fold over the bottom-left→top-right diagonal; step 2: bottom (with left on it) folds over the other diagonal */
+.s1 .g1,.s1 .g1b,.s2 .g1,.s2 .g1b{transform:rotate3d(1,-1,0,180deg) translateZ(-1px)}
+.s2 .g2{transform:rotate3d(1,1,0,180deg) translateZ(-2px)}
+.guide{position:absolute;inset:0;pointer-events:none;transition:opacity .3s}
+.guide line{stroke:var(--ink);stroke-width:2.5;stroke-dasharray:9 7;stroke-linecap:round}
+.steps{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.dots{display:flex;gap:8px;justify-content:center;margin-top:14px}
+.dots i{width:12px;height:12px;border:2.5px solid var(--ink);background:var(--paper);transform:rotate(45deg)}
+.dots i.on{background:var(--teal)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-top:18px;padding-top:14px;border-top:2px dashed var(--grid);font-weight:800;font-size:.92rem}
+.legend span{display:flex;align-items:center;gap:8px}
+.legend svg{width:46px;height:12px}
+.models{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media (max-width:520px){.models{grid-template-columns:repeat(2,1fr)}}
+.model{--c:var(--paper);display:flex;flex-direction:column;align-items:center;gap:8px;text-decoration:none;padding:14px 10px 12px;text-align:center;transition:transform .2s cubic-bezier(.3,1.6,.5,1)}
+.model:hover{transform:translateY(-5px) rotate(2deg)}
+.model svg{width:70%;max-width:96px;height:auto}
+.model b{font:800 1.08rem/1.1 var(--f-display)}
+.model small{font-weight:800;color:var(--teal-d);font-size:.8rem;text-transform:uppercase;letter-spacing:.06em}
+.model.soon small{color:var(--ink-soft)}
+
+/* Oku */
+.oku{background:var(--purple);color:#fff;border-block:3px solid var(--ink)}
+.oku .band-head p{color:#EBDFFB}
+.book-row{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center}
+@media (max-width:720px){.book-row{grid-template-columns:1fr;justify-items:start}}
+.book{width:min(250px,64vw);aspect-ratio:3/4;position:relative;transform:rotate(-4deg);transition:transform .35s cubic-bezier(.3,1.5,.5,1)}
+.book:hover{transform:rotate(0) scale(1.03)}
+.book .cover{position:absolute;inset:0;background:var(--sun);border:3px solid var(--ink);border-radius:4px 12px 12px 4px;
+  box-shadow:inset 14px 0 0 var(--sun-d),8px 8px 0 rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:20px 14px 16px 26px;color:var(--ink);text-align:center}
+.book .cover b{font:800 1.5rem/1 var(--f-display)}
+.book .cover small{font:800 .8rem var(--f-display);letter-spacing:.1em;text-transform:uppercase}
+.book .cover svg{width:62%}
+.book-info h3{font-size:clamp(1.8rem,3.5vw,2.6rem)}
+.book-info p{max-width:44ch;font-weight:700;color:#EBDFFB}
+
+/* Oyna */
+.games{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media (max-width:980px){.games{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:460px){.games{grid-template-columns:1fr}}
+.gtab{text-decoration:none;color:inherit;cursor:pointer;transition:transform .25s cubic-bezier(.3,1.5,.5,1)}
+.gtab:hover{transform:translateY(-4px) rotate(-1deg)}
+.gtab[aria-selected="true"]{transform:translateY(-8px) rotate(-1.5deg);filter:drop-shadow(5px 8px 0 rgba(43,34,64,.28))}
+.gtab[aria-selected="true"] .btn::before{background:var(--ink)}
+.gtab[aria-selected="true"] .btn{--tx:#fff}
+.game.c4{--c:var(--purple);--cd:var(--purple-d);color:#fff}
+.playpanel{margin-top:34px;--c:var(--paper);--f:40px;padding:26px}
+.game{--f:30px;display:flex;flex-direction:column;gap:10px;min-height:230px;padding:24px}
+.game.c1{--c:var(--pink);--cd:#D9637F}.game.c2{--c:var(--sun);--cd:var(--sun-d)}.game.c3{--c:var(--teal);--cd:var(--teal-d);color:#fff}
+.game h3{font-size:1.7rem}
+.game p{margin:0;font-weight:700}
+.game .row{margin-top:auto;display:flex;justify-content:space-between;align-items:end;gap:10px}
+.game svg.ill{width:84px;height:84px;flex:none}
+.stamp{font:800 .9rem/1 var(--f-display);border:3px solid currentColor;border-radius:999px;padding:.5em .9em .4em;transform:rotate(-8deg);opacity:.85}
+
+/* Balık katla game */
+
+.fg-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:26px;align-items:start}
+@media (max-width:860px){.fg-grid{grid-template-columns:1fr}}
+.fg-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.fg-head h3{font-size:clamp(1.7rem,3.4vw,2.3rem)}
+.badge{font:800 .8rem/1 var(--f-display);letter-spacing:.1em;text-transform:uppercase;background:var(--sun);padding:.5em .8em .4em;transform:rotate(3deg)}
+.board{position:relative;aspect-ratio:1;max-width:100%;border-radius:14px;border:3px solid var(--ink);overflow:hidden;
+  background:#EAF2FB;background-image:linear-gradient(#D4E2F3 1px,transparent 1px),linear-gradient(90deg,#D4E2F3 1px,transparent 1px);background-size:24px 24px;touch-action:none}
+.board canvas{position:absolute;inset:0;width:100%;height:100%;cursor:grab}
+.board canvas.drag{cursor:grabbing}
+.win{position:absolute;inset:auto 0 0 0;display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 16px 20px;
+  background:linear-gradient(transparent,rgba(255,255,255,.92) 35%);text-align:center}
+.win b{font:800 clamp(2.4rem,7vw,3.6rem)/1 var(--f-display);color:var(--purple);transform:rotate(-3deg);animation:pop .6s cubic-bezier(.3,1.8,.5,1) both}
+@keyframes pop{from{transform:scale(.3) rotate(-12deg);opacity:0}}
+.confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.confetti i{position:absolute;top:-20px;width:12px;height:12px;animation:fall 2.4s cubic-bezier(.3,.6,.6,1) forwards}
+@keyframes fall{to{transform:translateY(560px) rotate(540deg);opacity:.2}}
+.side{display:flex;flex-direction:column;gap:16px}
+.say-wrap{display:flex;align-items:flex-end;gap:10px}
+.say-kun{width:86px;height:auto;flex:none;transform:rotate(-4deg);margin-bottom:-6px}
+.say{flex:1;min-width:0;position:relative;background:var(--sun);border:3px solid var(--ink);border-radius:16px;padding:14px 16px;font:800 1.15rem/1.35 var(--f-body);min-height:5.2em}
+.say::after{content:"";position:absolute;left:-13px;bottom:22px;width:20px;height:20px;background:var(--sun);border-left:3px solid var(--ink);border-bottom:3px solid var(--ink);transform:rotate(45deg)}
+.say small{display:block;font:800 .8rem var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px}
+.stepbar{display:flex;gap:8px;margin-top:8px}
+.stepbar i{flex:1;height:14px;border:2.5px solid var(--ink);background:var(--paper);clip-path:polygon(0 0,calc(100% - 6px) 0,100% 50%,calc(100% - 6px) 100%,0 100%)}
+.stepbar i.done{background:var(--teal)}
+.stepbar i.now{background:var(--sun)}
+.swatches{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.swatches span{font-weight:800;font-size:.95rem}
+.sw{width:38px;height:38px;border:3px solid var(--ink);background:var(--c);cursor:pointer;padding:0;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%);transition:transform .2s}
+.sw[aria-pressed="true"]{transform:translateY(-4px) rotate(-6deg);outline:3px solid var(--ink);outline-offset:3px}
+.fg-btns{display:flex;gap:10px;flex-wrap:wrap}
+.legend2{display:flex;gap:16px;flex-wrap:wrap;font-weight:800;font-size:.9rem;color:var(--ink-soft)}
+.legend2 span{display:flex;align-items:center;gap:6px}
+.legend2 svg{width:40px;height:12px}
+
+/* Boyama */
+.cb-tools{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;margin-bottom:12px}
+.cb-group{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tool{display:flex;flex-direction:column;align-items:center;gap:2px;font:800 .85rem/1 var(--f-display);color:var(--ink);background:var(--paper);
+  border:3px solid var(--ink);border-radius:12px;padding:6px 10px 5px;cursor:pointer;transition:transform .15s}
+.tool svg{width:32px;height:32px}
+.tool[aria-pressed="true"]{background:var(--sun);transform:translateY(-3px) rotate(-3deg);box-shadow:3px 4px 0 var(--ink)}
+.size{width:44px;height:44px;display:grid;place-items:center;border:3px solid var(--ink);border-radius:50%;background:var(--paper);cursor:pointer}
+.size i{display:block;border-radius:50%;background:var(--ink)}
+.size[aria-pressed="true"]{background:var(--sun);box-shadow:2px 3px 0 var(--ink)}
+.palette{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.pc{width:40px;height:40px;border:3px solid var(--ink);background:var(--c);cursor:pointer;padding:0;
+  clip-path:polygon(0 0,calc(100% - 11px) 0,100% 11px,100% 100%,0 100%);transition:transform .15s}
+.pc[aria-checked="true"]{transform:translateY(-6px) rotate(-8deg);outline:3px solid var(--ink);outline-offset:2px}
+.cb-board{position:relative;aspect-ratio:1382/817;max-width:100%;background:#fff;border:3px solid var(--ink);border-radius:12px;overflow:hidden;touch-action:none}
+.cb-board canvas,.cb-board img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.cb-board img{pointer-events:none;user-select:none}
+.cb-board canvas{cursor:crosshair}
+.cb-confirm{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-weight:800;margin:12px 0 0}
+
+/* Paperkun Düşünüyor */
+.mathgame{position:relative;overflow:hidden}
+.mg-stage{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:24px;align-items:center}
+@media (max-width:760px){.mg-stage{grid-template-columns:1fr;gap:12px}.mg-kun{max-width:250px;padding-top:92px}.mg-kun img{width:58%;margin-left:6%}}
+.mg-kun{position:relative;padding-top:120px;max-width:340px;justify-self:center;width:100%}
+.mg-kun img{width:72%;height:auto;display:block;margin-left:4%;transition:transform .3s}
+.mg-kun img.happy{animation:jump .6s cubic-bezier(.3,1.6,.5,1)}
+@keyframes jump{40%{transform:translateY(-18px) rotate(-4deg)}}
+.thought{position:absolute;top:0;right:0;width:78%}
+.cloud{background:var(--paper);border:3px solid var(--ink);border-radius:46% 54% 50% 50%/60% 55% 45% 40%;padding:18px 12px;text-align:center;
+  font:800 clamp(2rem,6vw,2.8rem)/1 var(--f-display);font-variant-numeric:tabular-nums;color:var(--ink);box-shadow:4px 5px 0 rgba(43,34,64,.18)}
+.thought i{position:absolute;border:3px solid var(--ink);background:var(--paper);border-radius:50%}
+.thought .t1{width:22px;height:22px;left:10%;bottom:-30px}
+.thought .t2{width:13px;height:13px;left:2%;bottom:-50px}
+.mg-top{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.stars{display:flex;gap:6px}
+.stars i{width:34px;height:34px;background:#E4E9F2;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);transition:background .3s,transform .4s}
+.stars i.on{background:var(--sun);transform:rotate(-12deg) scale(1.15)}
+.timer{position:relative;flex:1;min-width:140px;max-width:260px;height:30px;border:3px solid var(--ink);border-radius:8px;background:var(--paper);overflow:hidden}
+.timer .bar{position:absolute;inset:0;background:var(--teal);transform-origin:left;transition:background .3s}
+.timer .bar.low{background:var(--pink)}
+.timer span{position:absolute;inset:0;display:grid;place-items:center;font:800 1rem/1 var(--f-display);font-variant-numeric:tabular-nums}
+.mg-msg{font-weight:800;font-size:1.1rem;min-height:3em;margin:0 0 14px}
+.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.answers .btn{justify-content:center;font-size:2rem;padding:.55em .5em .45em;--fold:20px}
+.answers .btn.wrong{--c:var(--pink);--cd:#D9637F;animation:shake .4s}
+.answers .btn.right{--c:var(--teal);--cd:var(--teal-d);--tx:#fff}
+.answers .btn:disabled{cursor:default}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.mg-start{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.levels{display:flex;gap:8px;flex-wrap:wrap}
+.lvl{font:800 1rem/1 var(--f-display);border:3px solid var(--ink);border-radius:999px;padding:.55em 1em .45em;background:var(--paper);color:var(--ink);cursor:pointer}
+.lvl[aria-pressed="true"]{background:var(--sun)}
+
+/* Parents */
+.parents{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:start}
+@media (max-width:820px){.parents{grid-template-columns:1fr}}
+.parents .card{padding:28px}
+.parents h3{font-size:1.6rem;margin-bottom:8px}
+.parents p{margin:0 0 10px;max-width:58ch}
+.mail{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.mail code{font:800 1.1rem var(--f-body);background:var(--table);padding:.4em .7em;border-radius:6px;user-select:all}
+.copied{font-weight:800;color:var(--teal-d);font-size:.95rem}
+
+/* Footer */
+footer{background:var(--ink);color:#fff;margin-top:64px}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;padding-block:36px calc(36px + env(safe-area-inset-bottom,0px))}
+.foot p{margin:0;opacity:.8;font-weight:700}
+.social{display:flex;gap:12px;flex-wrap:wrap}
+.foot .btn.paper{--tx:var(--ink)}
+.cut{height:22px;background:
+  linear-gradient(135deg,var(--table) 50%,transparent 50%) 0 0/22px 22px repeat-x,
+  linear-gradient(225deg,var(--table) 50%,transparent 50%) 0 0/22px 22px repeat-x;background-color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top"><img src="img/logo.webp" alt="Paperkun" width="900" height="194"></a>
+    <nav class="menu" aria-label="Ana menü">
+      <a class="tab" data-c="o" href="#izle" data-i18n="nav_izle">İzle</a>
+      <a class="tab" data-c="t" href="#katla" data-i18n="nav_katla">Katla</a>
+      <a class="tab" data-c="p" href="#oku" data-i18n="nav_oku">Oku</a>
+      <a class="tab" data-c="s" href="#oyna" data-i18n="nav_oyna">Oyna</a>
+      <button class="lang" id="langBtn" type="button" aria-label="Dil değiştir">EN</button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1><span data-i18n="hero_a">Merhaba, ben</span> <em>Paperkun!</em></h1>
+        <p class="lead" data-i18n="hero_p">Kağıttan yapıldım. Katlanınca yaprak, yıldız, hatta kutu olabilirim. Benimle izle, katla, oku ve oyna!</p>
+        <div class="ctas">
+          <a class="btn" href="#izle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg><span data-i18n="cta_izle">Bölümleri izle</span></a>
+          <a class="btn teal" href="#katla"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h18v18z" fill="currentColor" opacity=".55"/><path d="M3 3l18 18H3z" fill="currentColor"/></svg><span data-i18n="cta_katla">Katlamaya başla</span></a>
+        </div>
+      </div>
+      <div class="stage" aria-hidden="true">
+        <div class="sheet-bg2"></div>
+        <div class="sheet-bg"></div>
+        <!-- Crane decorations -->
+        <svg class="crane c1" viewBox="0 0 100 70"><polygon points="50,20 2,4 40,42" fill="#6B3FA0"/><polygon points="50,20 98,4 60,42" fill="#8A5CC2"/><polygon points="40,42 60,42 50,66" fill="#4C2A78"/><polygon points="40,42 50,20 60,42" fill="#7A4BB3"/><polygon points="60,42 88,30 82,24" fill="#4C2A78"/></svg>
+        <svg class="crane c2" viewBox="0 0 100 70"><polygon points="50,20 2,4 40,42" fill="#FF8FA8"/><polygon points="50,20 98,4 60,42" fill="#FFB0C1"/><polygon points="40,42 60,42 50,66" fill="#D9637F"/><polygon points="40,42 50,20 60,42" fill="#F07892"/><polygon points="40,42 12,30 18,24" fill="#D9637F"/></svg>
+        <img class="kun" src="img/paperkun.webp" alt="Paperkun el sallıyor" width="700" height="755">
+        <div class="bubble" data-i18n="bubble">Selam!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUR DOORS -->
+  <div class="wrap doors">
+    <a class="door" href="#izle"><span class="crease"></span>
+      <svg class="ico" viewBox="0 0 60 60" aria-hidden="true"><rect x="6" y="12" width="48" height="34" rx="6" fill="#fff" stroke="#2B2240" stroke-width="4"/><path d="M25 21l12 8-12 8z" fill="#2B2240"/><path d="M22 54h16" stroke="#2B2240" stroke-width="4" stroke-linecap="round"/></svg>
+      <h3 data-i18n="nav_izle">İzle</h3><p data-i18n="d_izle">Çizgi film bölümleri ve şarkılar</p>
+      <span class="go"><span data-i18n="go">Hadi!</span> →</span></a>
+    <a class="door t" href="#katla"><span class="crease"></span>
+      <svg class="ico" viewBox="0 0 60 60" aria-hidden="true"><path d="M8 8h44v44z" fill="#fff" stroke="#2B2240" stroke-width="4" stroke-linejoin="round"/><path d="M8 8v44h44z" fill="#9FE3DC" stroke="#2B2240" stroke-width="4" stroke-linejoin="round"/></svg>
+      <h3 data-i18n="nav_katla">Katla</h3><p data-i18n="d_katla">Adım adım origami</p>
+      <span class="go"><span data-i18n="go">Hadi!</span> →</span></a>
+    <a class="door p" href="#oku"><span class="crease"></span>
+      <svg class="ico" viewBox="0 0 60 60" aria-hidden="true"><path d="M30 14c-8-5-16-6-24-4v38c8-2 16-1 24 4 8-5 16-6 24-4V10c-8-2-16-1-24 4z" fill="#fff" stroke="#2B2240" stroke-width="4" stroke-linejoin="round"/><path d="M30 14v38" stroke="#2B2240" stroke-width="4"/></svg>
+      <h3 data-i18n="nav_oku">Oku</h3><p data-i18n="d_oku">Resimli hikaye kitapları</p>
+      <span class="go"><span data-i18n="go">Hadi!</span> →</span></a>
+    <a class="door s" href="#oyna"><span class="crease"></span>
+      <svg class="ico" viewBox="0 0 60 60" aria-hidden="true"><rect x="8" y="8" width="44" height="44" rx="10" fill="#fff" stroke="#2B2240" stroke-width="4"/><circle cx="20" cy="20" r="4.5" fill="#2B2240"/><circle cx="40" cy="40" r="4.5" fill="#2B2240"/><circle cx="30" cy="30" r="4.5" fill="#2B2240"/><circle cx="40" cy="20" r="4.5" fill="#2B2240"/><circle cx="20" cy="40" r="4.5" fill="#2B2240"/></svg>
+      <h3 data-i18n="nav_oyna">Oyna</h3><p data-i18n="d_oyna">Boyama ve oyunlar</p>
+      <span class="go"><span data-i18n="go">Hadi!</span> →</span></a>
+  </div>
+
+  <!-- İZLE -->
+  <section class="band izle" id="izle">
+    <div class="wrap">
+      <div class="band-head">
+        <div><span class="label" data-i18n="l_izle">Paperkun TV</span><h2 data-i18n="h_izle">Bölümleri izle</h2>
+          <p data-i18n="p_izle">Paperkun her bölümde başka bir şekle dönüşüyor. Bakalım bugün ne olacak?</p></div>
+        <a class="btn paper" href="https://www.youtube.com/@Paperkun" target="_blank" rel="noopener"><span data-i18n="yt_all">YouTube kanalı</span> ↗</a>
+      </div>
+      <div class="eps">
+        <a class="ep" href="https://www.youtube.com/playlist?list=PLdu_RWfQ_TCk" target="_blank" rel="noopener">
+          <div class="screen" style="background:#BDEFD9">
+            <svg class="deco" viewBox="0 0 200 120" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path d="M30 95c20-50 60-60 70-60-10 30-30 60-70 60z" fill="#2FB36E"/><path d="M30 95L95 38" stroke="#1D7F4C" stroke-width="3"/><path d="M150 110c10-40 40-50 48-50-6 24-22 48-48 50z" fill="#7DD3A0"/></svg>
+            <span class="play"><svg viewBox="0 0 24 24" width="26"><path d="M8 5l12 7-12 7z" fill="#2B2240"/></svg></span>
+          </div>
+          <span class="meta" data-i18n="eps_m">Bölümler · 5 bölüm</span><h3 data-i18n="eps_h">Paperkun'un maceraları</h3></a>
+        <a class="ep" href="https://www.youtube.com/playlist?list=PLZOrpLNg0lwstyGU94dNrH0vO4361cQGj" target="_blank" rel="noopener">
+          <div class="screen" style="background:#FFE7A3">
+            <svg class="deco" viewBox="0 0 200 120" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="#6B3FA0"><rect x="30" y="40" width="8" height="40"/><circle cx="30" cy="82" r="10"/><rect x="150" y="30" width="8" height="40"/><circle cx="150" cy="72" r="10"/><path d="M158 30h20v10h-20z"/></g></svg>
+            <span class="play"><svg viewBox="0 0 24 24" width="26"><path d="M8 5l12 7-12 7z" fill="#2B2240"/></svg></span>
+          </div>
+          <span class="meta" data-i18n="songs_m">Şarkılar · 14 şarkı</span><h3 data-i18n="songs">Paperkun'la şarkı söyle</h3></a>
+        <div class="ep soon" aria-disabled="true">
+          <div class="screen" style="background:#E6DAF6"><span class="tape" data-i18n="soon">Yakında!</span>
+            <span class="play"><svg viewBox="0 0 24 24" width="26"><path d="M8 5l12 7-12 7z" fill="#2B2240"/></svg></span>
+          </div>
+          <span class="meta" data-i18n="ep2_m">Yeni bölüm</span><h3 data-i18n="ep2">Yeni macera katlanıyor…</h3></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KATLA -->
+  <section class="band" id="katla">
+    <div class="wrap">
+      <div class="band-head">
+        <div><span class="label" data-i18n="l_katla">Origami atölyesi</span><h2 data-i18n="h_katla">Haydi katlayalım!</h2>
+          <p data-i18n="p_katla">Paperkun gibi sen de şekil değiştirmeye hazır mısın? Kağıdını hazırla, Paperkun'u takip et.</p></div>
+      </div>
+      <div class="katla-grid">
+        <div class="card lab">
+          <h3 data-i18n="lab_h">Önce bir dene!</h3>
+          <p class="hand" id="labHint" data-i18n="hint0">Kesikli çizgiden ikiye katla.</p>
+          <div class="fold-stage" id="foldStage">
+            <div class="sq">
+              <div class="q right"><div class="face f"></div><div class="face b"></div></div>
+              <div class="g2">
+                <div class="q bottom"><div class="face f"></div><div class="face b"></div></div>
+                <div class="g1b"><div class="q left"><div class="face f"></div><div class="face b"></div></div></div>
+              </div>
+              <div class="g1"><div class="q top"><div class="face f"></div><div class="face b"></div></div></div>
+            </div>
+            <svg class="guide" id="guide" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line id="gline" x1="0" y1="0" x2="100" y2="100" vector-effect="non-scaling-stroke"/></svg>
+          </div>
+          <div class="steps">
+            <button class="btn teal small" id="foldBtn" type="button" data-i18n="fold">Katla!</button>
+            <button class="btn paper small" id="resetBtn" type="button" data-i18n="unfold">Aç</button>
+          </div>
+          <div class="dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+          <div class="legend">
+            <span><svg viewBox="0 0 46 12"><line x1="2" y1="6" x2="44" y2="6" stroke="#2B2240" stroke-width="2.5" stroke-dasharray="7 5"/></svg><span data-i18n="valley">Vadi katı</span></span>
+            <span><svg viewBox="0 0 46 12"><line x1="2" y1="6" x2="44" y2="6" stroke="#2B2240" stroke-width="2.5" stroke-dasharray="9 3 2 3 2 3"/></svg><span data-i18n="mountain">Dağ katı</span></span>
+            <span><svg viewBox="0 0 46 12"><path d="M4 9q19-10 38 0" fill="none" stroke="#2B2240" stroke-width="2.5"/><path d="M36 4l6 5-7 2" fill="none" stroke="#2B2240" stroke-width="2.5"/></svg><span data-i18n="arrow">Katlama yönü</span></span>
+          </div>
+        </div>
+        <div class="models" id="models"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OKU -->
+  <section class="band oku" id="oku">
+    <div class="wrap">
+      <div class="band-head"><div><span class="label" style="background:#fff;color:var(--ink)" data-i18n="l_oku">Kitaplık</span><h2 data-i18n="h_oku">Paperkun'la oku</h2>
+        <p data-i18n="p_oku">Resimli kitaplarımızı ekrandan sayfa sayfa çevirerek okuyabilirsin.</p></div></div>
+      <div class="book-row">
+        <a class="book" href="https://online.fliphtml5.com/vfugt/ncqf/" target="_blank" rel="noopener" aria-label="Paperkun Yaprak Oluyor kitabını aç">
+          <div class="cover"><small data-i18n="picbook">Resimli kitap</small>
+            <svg viewBox="0 0 100 80" aria-hidden="true"><path d="M10 70C25 25 65 10 90 8 80 40 55 68 10 70z" fill="#2FB36E" stroke="#2B2240" stroke-width="4" stroke-linejoin="round"/><path d="M10 70L80 18" stroke="#2B2240" stroke-width="3" stroke-dasharray="6 5"/></svg>
+            <b data-i18n="ep1">Paperkun Yaprak Oluyor</b></div>
+        </a>
+        <div class="book-info">
+          <h3 data-i18n="ep1">Paperkun Yaprak Oluyor</h3>
+          <p data-i18n="book_p">Rüzgarlı bir günde Paperkun bir yaprağa dönüşmeye karar verir. Kitabı okuduktan sonra yaprağı sen de katlayabilirsin!</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px">
+            <a class="btn sun" href="https://online.fliphtml5.com/vfugt/ncqf/" target="_blank" rel="noopener"><span data-i18n="read">Kitabı oku</span> ↗</a>
+            <a class="btn paper" href="#katla"><span data-i18n="fold_leaf">Yaprağı katla</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OYNA -->
+  <section class="band" id="oyna">
+    <div class="wrap">
+      <div class="band-head"><div><span class="label" data-i18n="l_oyna">Oyun odası</span><h2 data-i18n="h_oyna">Paperkun'la oyna</h2>
+        <p data-i18n="p_oyna">Boya, eğlen, arkadaşlarınla oyna.</p></div></div>
+      <div class="games" role="tablist" aria-label="Oyunlar">
+        <a class="card game c1 gtab" href="#boya" data-game="boya" role="tab">
+          <h3 data-i18n="g1">Boyama</h3><p data-i18n="g1p">Paperkun ve arkadaşlarını istediğin renklere boya.</p>
+          <div class="row"><span class="btn paper small"><span data-i18n="g1b">Boya</span></span>
+            <svg class="ill" viewBox="0 0 80 80" aria-hidden="true"><path d="M20 66L56 14l10 7-36 52-12 4z" fill="#FFC93C" stroke="#2B2240" stroke-width="4" stroke-linejoin="round"/><path d="M56 14l4-6 10 7-4 6z" fill="#FF8FA8" stroke="#2B2240" stroke-width="4" stroke-linejoin="round"/></svg></div>
+        </a>
+        <a class="card game c2 gtab" href="#balik" data-game="balik" role="tab">
+          <h3 data-i18n="fg_title">Balık Katla</h3><p data-i18n="g2p">Kağıdı kesikli çizgilerden katla, balığını yap.</p>
+          <div class="row"><span class="btn paper small"><span data-i18n="g2b">Katla</span></span>
+            <svg class="ill" viewBox="0 0 80 80" aria-hidden="true"><path d="M8 40l18-18h22v36H26z" fill="#F7931E" stroke="#2B2240" stroke-width="4" stroke-linejoin="round"/><path d="M48 22l20-10-6 22zM48 58l20 10-6-22z" fill="#F7931E" stroke="#2B2240" stroke-width="4" stroke-linejoin="round"/><circle cx="22" cy="38" r="4" fill="#2B2240"/></svg></div>
+        </a>
+        <a class="card game c4 gtab" href="#matematik" data-game="matematik" role="tab">
+          <h3 data-i18n="g4">Paperkun Düşünüyor</h3><p data-i18n="g4p">İşlemi 10 saniyede çöz, Paperkun'a yardım et.</p>
+          <div class="row"><span class="btn paper small"><span data-i18n="g4b">Oyna</span></span>
+            <svg class="ill" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="30" fill="#fff" stroke="#2B2240" stroke-width="4"/><path d="M28 34h10M33 29v10M44 34h10M28 48h10M44 46h10M44 51h10" stroke="#2B2240" stroke-width="4" stroke-linecap="round"/></svg></div>
+        </a>
+        <div class="card game c3">
+          <h3 data-i18n="g3">Kutu oyunu</h3><p data-i18n="g3p">Ailecek masada oynayacağın Paperkun kutu oyunu.</p>
+          <div class="row"><span class="stamp" data-i18n="soon">Yakında!</span>
+            <svg class="ill" viewBox="0 0 80 80" aria-hidden="true"><path d="M10 28l30-14 30 14-30 14z" fill="#FFC93C" stroke="#2B2240" stroke-width="4" stroke-linejoin="round"/><path d="M10 28v28l30 14V42z" fill="#F7931E" stroke="#2B2240" stroke-width="4" stroke-linejoin="round"/><path d="M70 28v28L40 70V42z" fill="#fff" stroke="#2B2240" stroke-width="4" stroke-linejoin="round"/></svg></div>
+        </div>
+      </div>
+
+      <!-- MINI GAME: Boyama -->
+      <div class="card playpanel" id="boya" data-panel="boya">
+        <div class="fg-head"><span class="badge" data-i18n="cb_badge">Boyama sayfası</span><h3 data-i18n="cb_title">Paperkun'un arkadaşları</h3></div>
+        <div class="cb-tools" role="toolbar" aria-label="Boyama araçları">
+          <div class="cb-group">
+            <button class="tool" type="button" data-tool="pen" aria-pressed="true"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 26l3-9L22 4l6 6-13 13z" fill="#FFC93C" stroke="#2B2240" stroke-width="2.5" stroke-linejoin="round"/><path d="M6 26l3-9 6 6z" fill="#F4D6B0" stroke="#2B2240" stroke-width="2.5" stroke-linejoin="round"/></svg><span data-i18n="cb_pen">Kalem</span></button>
+            <button class="tool" type="button" data-tool="fill" aria-pressed="false"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 14l10-10 11 11-10 10z" fill="#fff" stroke="#2B2240" stroke-width="2.5" stroke-linejoin="round"/><path d="M5 14h21l-10 10z" fill="#1A9CC0" stroke="#2B2240" stroke-width="2.5" stroke-linejoin="round"/><path d="M27 19c2 3 2 6 0 6s-2-3 0-6z" fill="#1A9CC0" stroke="#2B2240" stroke-width="2"/></svg><span data-i18n="cb_fill">Kova</span></button>
+            <button class="tool" type="button" data-tool="eraser" aria-pressed="false"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 20L16 8l10 10-8 8h-8z" fill="#FF8FA8" stroke="#2B2240" stroke-width="2.5" stroke-linejoin="round"/><path d="M10 14l10 10" stroke="#2B2240" stroke-width="2.5"/><path d="M14 26h14" stroke="#2B2240" stroke-width="2.5" stroke-linecap="round"/></svg><span data-i18n="cb_eraser">Silgi</span></button>
+          </div>
+          <div class="cb-group sizes" aria-label="Kalem kalınlığı">
+            <button class="size" type="button" data-size="10" aria-pressed="false" aria-label="İnce"><i style="width:8px;height:8px"></i></button>
+            <button class="size" type="button" data-size="24" aria-pressed="true" aria-label="Orta"><i style="width:14px;height:14px"></i></button>
+            <button class="size" type="button" data-size="48" aria-pressed="false" aria-label="Kalın"><i style="width:22px;height:22px"></i></button>
+          </div>
+          <div class="cb-group">
+            <button class="btn paper small" type="button" id="cbUndo" data-i18n="cb_undo">Geri al</button>
+            <button class="btn paper small" type="button" id="cbClear" data-i18n="cb_clear">Temizle</button>
+            <button class="btn sun small" type="button" id="cbSave" data-i18n="cb_save">Resmi kaydet</button>
+          </div>
+        </div>
+        <div class="palette" id="palette" role="radiogroup" aria-label="Renkler"></div>
+        <div class="cb-board" id="cbBoard">
+          <canvas id="cbPaint" aria-label="Boyama sayfası. Renk seç ve parmağınla ya da fareyle boya."></canvas>
+          <img id="cbLines" src="img/boyama-1.png" alt="" draggable="false">
+        </div>
+        <p class="cb-confirm" id="cbConfirm" hidden><span data-i18n="cb_sure">Bütün boyalar silinsin mi?</span>
+          <button class="btn sun small" type="button" id="cbYes" data-i18n="cb_yes">Evet, sil</button>
+          <button class="btn paper small" type="button" id="cbNo" data-i18n="cb_no">Vazgeç</button></p>
+      </div>
+
+      <!-- MINI GAME: Paperkun Düşünüyor -->
+      <div class="card playpanel mathgame" id="matematik" data-panel="matematik">
+        <div class="fg-head"><span class="badge" data-i18n="fg_badge">Mini oyun</span><h3 data-i18n="g4">Paperkun Düşünüyor</h3></div>
+        <div class="mg-stage">
+          <div class="mg-kun">
+            <img id="mgKun" src="img/paperkun-dusunuyor.webp" alt="Paperkun düşünüyor" width="560" height="760">
+            <div class="thought" aria-live="polite">
+              <i class="t1"></i><i class="t2"></i>
+              <div class="cloud"><span id="mgQ">?</span></div>
+            </div>
+          </div>
+          <div class="mg-play">
+            <div class="mg-top">
+              <div class="stars" id="mgStars" aria-label="Doğru cevaplar"><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="timer"><div class="bar" id="mgBar"></div><span id="mgSec">10</span></div>
+            </div>
+            <p class="mg-msg" id="mgMsg" role="status" data-i18n="mg_intro">Paperkun bir işlem düşünüyor ama cevabı bulamıyor. 10 saniye içinde doğru cevaba tıkla, ona yardım et!</p>
+            <div class="answers" id="mgAns"></div>
+            <div class="mg-start" id="mgStart">
+              <div class="levels" role="radiogroup" aria-label="Zorluk">
+                <button class="lvl" type="button" data-max="10" aria-pressed="true" data-i18n="mg_easy">10'a kadar</button>
+                <button class="lvl" type="button" data-max="20" aria-pressed="false" data-i18n="mg_hard">20'ye kadar</button>
+              </div>
+              <button class="btn" type="button" id="mgGo" data-i18n="mg_go">Başla!</button>
+            </div>
+          </div>
+        </div>
+        <div class="confetti" id="mgConf"></div>
+      </div>
+
+      <!-- MINI GAME: Balık Katla -->
+      <div class="card fishgame playpanel" id="balik" data-panel="balik">
+        <div class="fg-head"><span class="badge" data-i18n="fg_badge">Mini oyun</span><h3 data-i18n="fg_title">Balık Katla</h3></div>
+        <div class="fg-grid">
+          <div class="board" id="board">
+            <canvas id="fgCanvas" aria-label="Katlanacak kağıt. Kağıdı kesikli çizginin üzerinden sürükleyerek katla."></canvas>
+            <div class="confetti" id="confetti"></div>
+            <div class="win" id="win" hidden>
+              <b data-i18n="fg_win">Başardın!</b>
+              <span class="hand" data-i18n="fg_win2">Harika bir balık katladın.</span>
+            </div>
+          </div>
+          <div class="side">
+            <div class="say-wrap"><img class="say-kun" src="img/paperkun.webp" alt="" width="700" height="755"><div class="say" role="status" aria-live="polite"><small id="fgStepLbl">Adım 1 / 5</small><span id="fgSay"></span></div></div>
+            <div class="stepbar" id="stepbar" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="fg-btns">
+              <button class="btn teal small" id="fgFold" type="button" data-i18n="fg_help">Bana göster</button>
+              <button class="btn paper small" id="fgReset" type="button" data-i18n="fg_reset">Baştan başla</button>
+            </div>
+            <div class="swatches" role="group" aria-label="Kağıt rengi">
+              <span data-i18n="fg_color">Kağıdın rengi:</span>
+              <button class="sw" type="button" style="--c:#F7931E" data-col="#F7931E" aria-pressed="true" aria-label="Turuncu"></button>
+              <button class="sw" type="button" style="--c:#8A5CC2" data-col="#8A5CC2" aria-pressed="false" aria-label="Mor"></button>
+              <button class="sw" type="button" style="--c:#1FA59A" data-col="#1FA59A" aria-pressed="false" aria-label="Turkuaz"></button>
+              <button class="sw" type="button" style="--c:#FF8FA8" data-col="#FF8FA8" aria-pressed="false" aria-label="Pembe"></button>
+            </div>
+            <div class="legend2">
+              <span><svg viewBox="0 0 40 12"><line x1="2" y1="6" x2="38" y2="6" stroke="#2B2240" stroke-width="2.5" stroke-dasharray="6 4"/></svg><span data-i18n="valley">Vadi katı</span></span>
+              <span><svg viewBox="0 0 40 12"><line x1="2" y1="6" x2="38" y2="6" stroke="#2B2240" stroke-width="2.5" stroke-dasharray="8 3 2 3"/></svg><span data-i18n="mountain">Dağ katı</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARENTS -->
+  <section class="band" style="padding-top:0">
+    <div class="wrap parents">
+      <div class="card">
+        <span class="label" data-i18n="l_par">Ebeveynler ve öğretmenler için</span>
+        <h3 data-i18n="par_h">Paperkun nedir?</h3>
+        <p data-i18n="par_p1">Paperkun, kağıttan yapılmış ve katlanarak şekil değiştirebilen bir çizgi film karakteri. Çizgi filmler, resimli kitaplar ve origami etkinlikleriyle çocukları ekran başından kalkıp elleriyle bir şey yapmaya davet ediyor.</p>
+        <p data-i18n="par_p2">Katlama sayfalarını sınıfta ya da evde, tek bir kare kağıtla kullanabilirsiniz.</p>
+      </div>
+      <div class="card" style="--c:var(--sun);--cd:var(--sun-d)">
+        <h3 data-i18n="contact_h">Bize yazın</h3>
+        <p data-i18n="contact_p">İş birliği, okul etkinlikleri ve diğer sorularınız için:</p>
+        <div class="mail"><code id="mailTxt">info@paperkun.com</code>
+          <button class="btn paper small" id="copyBtn" type="button" data-i18n="copy">Kopyala</button>
+          <span class="copied" id="copied" hidden data-i18n="copied">Kopyalandı!</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="cut" aria-hidden="true"></div>
+  <div class="wrap foot">
+    <div style="display:flex;flex-direction:column;gap:10px"><img src="img/logo.webp" alt="Paperkun" width="900" height="194" style="height:40px;width:auto;align-self:flex-start"><p>© 2026 Paperkun · <span data-i18n="tag">Çocuklar için çizgi film, kitap ve oyunlar</span></p></div>
+    <div class="social">
+      <a class="btn paper small" href="https://www.youtube.com/@Paperkun" target="_blank" rel="noopener">YouTube ↗</a>
+      <a class="btn paper small" href="https://www.instagram.com/paperkunofficial/" target="_blank" rel="noopener">Instagram ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- Origami models (crease previews) ---------- */
+const MODELS=[
+  {tr:"Yaprak",en:"Leaf",c:"#2FB36E",l:[[0,0,100,100]],href:null},
+  {tr:"Çiçek",en:"Flower",c:"#FF8FA8",l:[[0,0,100,100],[100,0,0,100]],href:null},
+  {tr:"Süsen Çiçeği",en:"Iris",c:"#8A5CC2",l:[[0,0,100,100],[100,0,0,100],[50,0,50,100],[0,50,100,50]],href:null},
+  {tr:"Yıldız",en:"Star",c:"#FFC93C",l:[[50,0,100,50],[100,50,50,100],[50,100,0,50],[0,50,50,0]],href:null},
+  {tr:"Ağaç",en:"Tree",c:"#1FA59A",l:[[50,0,50,100],[50,0,0,100],[50,0,100,100]],href:null},
+  {tr:"Çimen",en:"Grass",c:"#7DD3A0",l:[[25,0,25,100],[50,0,50,100],[75,0,75,100]],href:null},
+  {tr:"Bardak",en:"Cup",c:"#5BB5F0",l:[[0,0,100,100],[0,50,50,100],[50,0,100,50]],href:null},
+  {tr:"Kutu",en:"Box",c:"#F7931E",l:[[0,50,100,50],[50,0,50,100],[25,0,25,100],[75,0,75,100]],href:null}
+];
+function modelSVG(m){
+  const lines=m.l.map(a=>`<line x1="${a[0]}" y1="${a[1]}" x2="${a[2]}" y2="${a[3]}" stroke="#2B2240" stroke-width="2.4" stroke-dasharray="7 5" stroke-linecap="round" opacity=".7"/>`).join("");
+  return `<svg viewBox="-6 -6 112 112" aria-hidden="true"><rect x="0" y="0" width="100" height="100" fill="${m.c}" stroke="#2B2240" stroke-width="4" transform="rotate(-4 50 50)"/><g transform="rotate(-4 50 50)">${lines}</g></svg>`;
+}
+let LANG="tr";
+function renderModels(){
+  const el=document.getElementById("models");
+  el.innerHTML=MODELS.map(m=>{
+    const name=LANG==="tr"?m.tr:m.en;
+    const sub=m.href?(LANG==="tr"?"Adım adım":"Step by step"):(LANG==="tr"?"Yakında":"Coming soon");
+    const tag=m.href?"a":"div";
+    const attrs=m.href?`href="${m.href}" target="_blank" rel="noopener"`:'aria-disabled="true"';
+    return `<${tag} class="card model${m.href?"":" soon"}" ${attrs}>${modelSVG(m)}<b>${name}</b><small>${sub}</small></${tag}>`;
+  }).join("");
+}
+
+/* ---------- Fold lab ---------- */
+const stage=document.getElementById("foldStage"),gline=document.getElementById("gline"),
+      hint=document.getElementById("labHint"),dots=[...document.querySelectorAll(".dots i")];
+let step=0;
+const HINTS={tr:["Kesikli çizgiden ikiye katla.","Harika! Şimdi bir kez daha katla.","Süper! Bir üçgen oldu. Pek çok origaminin ilk adımı budur."],
+             en:["Fold in half along the dashed line.","Great! Now fold it once more.","Super! You made a triangle. Lots of origami starts like this."]};
+function paintStep(){
+  stage.classList.toggle("s1",step===1);stage.classList.toggle("s2",step===2);
+  if(step===0){gline.setAttribute("x1",0);gline.setAttribute("y1",100);gline.setAttribute("x2",100);gline.setAttribute("y2",0)}
+  if(step===1){gline.setAttribute("x1",0);gline.setAttribute("y1",0);gline.setAttribute("x2",100);gline.setAttribute("y2",100)}
+  document.getElementById("guide").style.opacity=step===2?0:1;
+  hint.textContent=HINTS[LANG][step];
+  dots.forEach((d,i)=>d.classList.toggle("on",i<=step));
+  document.getElementById("foldBtn").disabled=step===2;
+  document.getElementById("foldBtn").style.opacity=step===2?.5:1;
+}
+document.getElementById("foldBtn").addEventListener("click",()=>{if(step<2){step++;paintStep()}});
+document.getElementById("resetBtn").addEventListener("click",()=>{step=0;paintStep()});
+
+/* ---------- Copy email ---------- */
+document.getElementById("copyBtn").addEventListener("click",()=>{
+  const t=document.getElementById("mailTxt"),ok=document.getElementById("copied");
+  const done=()=>{ok.hidden=false;setTimeout(()=>ok.hidden=true,1800)};
+  const sel=()=>{const r=document.createRange();r.selectNodeContents(t);const s=getSelection();s.removeAllRanges();s.addRange(r)};
+  try{navigator.clipboard.writeText(t.textContent).then(done,sel)}catch(e){sel()}
+});
+
+/* ---------- Mini game: Balık Katla (flat-fold engine) ----------
+   The paper is a stack of convex polygons. A fold splits every selected layer
+   along the fold line, reflects the moving side and restacks it (on top for a
+   valley fold, behind for a mountain fold). The 5-step sequence below was
+   checked to end in a fish with a forked tail. */
+const FG=(()=>{
+  const cv=document.getElementById("fgCanvas"),ctx=cv.getContext("2d");
+  const board=document.getElementById("board"),sayEl=document.getElementById("fgSay"),lblEl=document.getElementById("fgStepLbl");
+  const winEl=document.getElementById("win"),confEl=document.getElementById("confetti");
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const INK="#2B2240",BACK="#FFF8EE",VIEW=1.28;
+  const U={x:-0.41421356,y:-0.58578644},D={x:U.x,y:-U.y},R={x:1,y:0};
+  const A=Math.PI/6,F={x:U.x+Math.cos(A),y:U.y+Math.sin(A)},Fm={x:F.x,y:-F.y};
+  const STEPS=[
+    {l:[R,U],pt:{x:0,y:-1},k:"v",sel:null,tag:"T"},
+    {l:[R,D],pt:{x:0,y:1},k:"v",sel:null,tag:"B"},
+    {l:[{x:0,y:-1},{x:0,y:1}],pt:{x:1,y:0},k:"m",sel:null,tag:"R"},
+    {l:[U,F],pt:{x:U.x+.02,y:-.05},k:"v",sel:["T"],tag:"FT"},
+    {l:[D,Fm],pt:{x:U.x+.02,y:.05},k:"v",sel:["B"],tag:"FB"}
+  ];
+  const SAY={
+    tr:["Kağıdın üst kenarını kesikli çizgiden ortaya doğru katla. Kağıdı tut ve ok yönünde sürükle!",
+        "Süper! Şimdi alt kenarı da aynı şekilde ortaya katla.",
+        "Sivri ucu arkaya katla. Bu bir dağ katı, kağıt arkaya gidiyor!",
+        "Üstteki kanadı dışarı doğru katla. Bu, kuyruğun ilk parçası!",
+        "Son kat! Alttaki kanadı da dışarı katla.",
+        "Balığın hazır! İstersen başka bir renk seçip yeniden katla."],
+    en:["Fold the top edge to the middle along the dashed line. Grab the paper and drag it the way the arrow points!",
+        "Super! Now fold the bottom edge to the middle the same way.",
+        "Fold the pointy tip to the back. That's a mountain fold, the paper goes behind!",
+        "Fold the top flap outwards. That's the first half of the tail!",
+        "Last fold! Fold the bottom flap outwards too.",
+        "Your fish is ready! Pick another color and fold again if you like."]};
+  let lang="tr",color="#F7931E",polys,step,t=0,anim=null,cur=null,drag=null,W=0,DPR=1,clock=0;
+
+  const side=(l,p)=>(l[1].x-l[0].x)*(p.y-l[0].y)-(l[1].y-l[0].y)*(p.x-l[0].x);
+  function clip(pts,l,s){
+    const out=[];
+    for(let i=0;i<pts.length;i++){
+      const a=pts[i],b=pts[(i+1)%pts.length],sa=side(l,a)*s,sb=side(l,b)*s;
+      if(sa>=0)out.push(a);
+      if((sa>0&&sb<0)||(sa<0&&sb>0)){const k=sa/(sa-sb);out.push({x:a.x+k*(b.x-a.x),y:a.y+k*(b.y-a.y)})}
+    }
+    return out.length>=3?out:null;
+  }
+  function foot(l,p){
+    const dx=l[1].x-l[0].x,dy=l[1].y-l[0].y,k=((p.x-l[0].x)*dx+(p.y-l[0].y)*dy)/(dx*dx+dy*dy);
+    return {x:l[0].x+k*dx,y:l[0].y+k*dy};
+  }
+  const refl=(l,p)=>{const f=foot(l,p);return {x:2*f.x-p.x,y:2*f.y-p.y}};
+  function area(pts){let a=0;for(let i=0;i<pts.length;i++){const p=pts[i],q=pts[(i+1)%pts.length];a+=p.x*q.y-q.x*p.y}return a/2}
+  function centroid(list){
+    let cx=0,cy=0,A=0;
+    list.forEach(P=>{const a=Math.abs(area(P.pts));const c=P.pts.reduce((s,p)=>({x:s.x+p.x,y:s.y+p.y}),{x:0,y:0});cx+=c.x/P.pts.length*a;cy+=c.y/P.pts.length*a;A+=a});
+    return {x:cx/A,y:cy/A};
+  }
+  function inside(pts,p){
+    let s0=0;
+    for(let i=0;i<pts.length;i++){const a=pts[i],b=pts[(i+1)%pts.length];const s=(b.x-a.x)*(p.y-a.y)-(b.y-a.y)*(p.x-a.x);
+      if(Math.abs(s)<1e-9)continue;if(!s0)s0=Math.sign(s);else if(Math.sign(s)!==s0)return false}
+    return true;
+  }
+
+  function prepare(){
+    if(step>=STEPS.length){cur=null;return}
+    const S=STEPS[step],s=side(S.l,S.pt)>0?1:-1,keep=[],move=[];
+    polys.forEach(P=>{
+      if(S.sel&&!S.sel.includes(P.tag)){keep.push(P);return}
+      const k=clip(P.pts,S.l,-s),m=clip(P.pts,S.l,s);
+      if(k)keep.push({...P,pts:k});if(m)move.push({...P,pts:m});
+    });
+    // guide segment: where the fold line crosses the layers it will fold
+    let lo=Infinity,hi=-Infinity;const d={x:S.l[1].x-S.l[0].x,y:S.l[1].y-S.l[0].y},dl=Math.hypot(d.x,d.y);
+    polys.filter(P=>!S.sel||S.sel.includes(P.tag)).forEach(P=>{
+      const pts=P.pts;
+      for(let i=0;i<pts.length;i++){const a=pts[i],b=pts[(i+1)%pts.length],sa=side(S.l,a),sb=side(S.l,b);
+        if(sa*sb<=0&&sa!==sb){const k=sa/(sa-sb),q={x:a.x+k*(b.x-a.x),y:a.y+k*(b.y-a.y)};
+          const u=((q.x-S.l[0].x)*d.x+(q.y-S.l[0].y)*d.y)/dl;lo=Math.min(lo,u);hi=Math.max(hi,u)}}
+    });
+    const pad=.12,ux=d.x/dl,uy=d.y/dl;
+    const g=[{x:S.l[0].x+ux*(lo-pad),y:S.l[0].y+uy*(lo-pad)},{x:S.l[0].x+ux*(hi+pad),y:S.l[0].y+uy*(hi+pad)}];
+    const mc=centroid(move),mr=refl(S.l,mc);
+    cur={S,keep,move,guide:g,mc,mr};
+  }
+  function commit(){
+    const {S,keep,move}=cur,zs=polys.map(P=>P.z),mz=move.map(P=>P.z),mx=Math.max(...mz),mn=Math.min(...mz);
+    move.forEach(P=>{
+      P.pts=P.pts.map(p=>refl(S.l,p));P.up=P.up==="A"?"B":"A";
+      P.z=S.k==="v"?Math.max(...zs)+1+(mx-P.z):Math.min(...zs)-1-(P.z-mn);P.tag=S.tag;
+    });
+    polys=keep.concat(move);step++;t=0;prepare();ui();
+    if(step===STEPS.length)celebrate();
+  }
+
+  /* ---------- drawing ---------- */
+  const X=p=>W/2+p.x*W/(2*VIEW),Y=p=>W/2+p.y*W/(2*VIEW),SC=W=>W/(2*VIEW);
+  function path(pts,dx=0,dy=0){ctx.beginPath();pts.forEach((p,i)=>{const x=X(p)+dx,y=Y(p)+dy;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.closePath()}
+  function face(P,pts,up,shade){
+    path(pts);ctx.fillStyle=up==="A"?color:BACK;ctx.fill();
+    if(shade>0){ctx.fillStyle=`rgba(43,34,64,${shade})`;ctx.fill()}
+    ctx.strokeStyle=INK;ctx.lineWidth=2.6*DPR;ctx.lineJoin="round";ctx.stroke();
+  }
+  function moved(P,c){
+    const l=cur.S.l;return P.pts.map(p=>{const f=foot(l,p);return {x:f.x+(p.x-f.x)*c,y:f.y+(p.y-f.y)*c}});
+  }
+  function render(){
+    if(!W)return;
+    ctx.clearRect(0,0,W,W);
+    const done=step>=STEPS.length,bob=done&&!reduce?Math.sin(clock/500)*6*DPR:0;
+    ctx.save();ctx.translate(0,bob);
+    if(done){ctx.translate(W*.06,0)}
+    const c=Math.cos(Math.PI*t),sn=Math.abs(Math.sin(Math.PI*t));
+    const stat=(cur?cur.keep:polys).slice().sort((a,b)=>a.z-b.z);
+    const mov=cur&&t>0?cur.move.slice().sort((a,b)=>c>=0?a.z-b.z:b.z-a.z):[];
+    const all=stat.map(P=>P.pts).concat(mov.map(P=>moved(P,c)));
+    if(cur&&t===0)all.push(...cur.move.map(P=>P.pts));
+    // paper shadow on the table
+    ctx.fillStyle="rgba(43,34,64,.13)";all.forEach(pts=>{path(pts,5*DPR,7*DPR);ctx.fill()});
+    const drawMov=()=>mov.forEach(P=>face(P,moved(P,c),c>=0?P.up:(P.up==="A"?"B":"A"),.2*sn));
+    if(cur&&t===0){
+      // nothing moving yet: draw everything in stack order
+      const both=cur.keep.concat(cur.move).sort((a,b)=>a.z-b.z);both.forEach(P=>face(P,P.pts,P.up,0));
+    }else{
+      if(cur&&cur.S.k==="m")drawMov();
+      stat.forEach(P=>face(P,P.pts,P.up,0));
+      if(cur&&cur.S.k==="v")drawMov();
+    }
+    if(done)drawFace();
+    ctx.restore();
+    if(cur&&!anim)drawGuide();
+  }
+  function drawFace(){
+    const e={x:-.62,y:-.1},r=.085*SC(W);
+    ctx.beginPath();ctx.arc(X(e),Y(e),r,0,Math.PI*2);ctx.fillStyle="#fff";ctx.fill();ctx.lineWidth=2.6*DPR;ctx.strokeStyle=INK;ctx.stroke();
+    ctx.beginPath();ctx.arc(X(e)-r*.15,Y(e)+r*.1,r*.5,0,Math.PI*2);ctx.fillStyle=INK;ctx.fill();
+    ctx.beginPath();ctx.arc(X(e)-r*.32,Y(e)-r*.1,r*.16,0,Math.PI*2);ctx.fillStyle="#fff";ctx.fill();
+    ctx.beginPath();ctx.arc(X({x:-.86,y:.1}),Y({x:-.86,y:.1}),r*.55,-.3,1.2);ctx.strokeStyle=INK;ctx.lineWidth=2.4*DPR;ctx.stroke();
+    // bubbles
+    [[-1.12,-.35,.05],[-1.18,-.6,.035],[-1.08,-.82,.025]].forEach(([x,y,rr],i)=>{
+      const yy=y-((clock/1400+i*.3)%1)*.25*(reduce?0:1);
+      ctx.beginPath();ctx.arc(X({x,y:yy}),Y({x,y:yy}),rr*SC(W),0,Math.PI*2);ctx.strokeStyle=INK;ctx.lineWidth=2*DPR;ctx.stroke()});
+  }
+  function drawGuide(){
+    const {guide:g,S,mc,mr}=cur;
+    ctx.save();ctx.strokeStyle=INK;ctx.lineWidth=3*DPR;ctx.lineCap="round";
+    ctx.setLineDash(S.k==="v"?[11*DPR,8*DPR]:[14*DPR,5*DPR,3*DPR,5*DPR]);
+    ctx.lineDashOffset=reduce?0:-clock/40*DPR;
+    ctx.beginPath();ctx.moveTo(X(g[0]),Y(g[0]));ctx.lineTo(X(g[1]),Y(g[1]));ctx.stroke();ctx.setLineDash([]);
+    // fold arrow: curved, from the flap to where it lands
+    const mx=(mc.x+mr.x)/2,my=(mc.y+mr.y)/2,vx=mr.x-mc.x,vy=mr.y-mc.y,len=Math.hypot(vx,vy);
+    const ctl={x:mx-vy*.35,y:my+vx*.35},end={x:mr.x-vx/len*.08,y:mr.y-vy/len*.08};
+    ctx.lineWidth=3*DPR;ctx.beginPath();ctx.moveTo(X(mc),Y(mc));ctx.quadraticCurveTo(X(ctl),Y(ctl),X(end),Y(end));ctx.stroke();
+    const ang=Math.atan2(Y(end)-Y(ctl),X(end)-X(ctl)),h=16*DPR;
+    ctx.beginPath();ctx.moveTo(X(end)+Math.cos(ang)*h*.4,Y(end)+Math.sin(ang)*h*.4);
+    ctx.lineTo(X(end)+Math.cos(ang+2.6)*h,Y(end)+Math.sin(ang+2.6)*h);
+    ctx.lineTo(X(end)+Math.cos(ang-2.6)*h,Y(end)+Math.sin(ang-2.6)*h);ctx.closePath();
+    ctx.fillStyle=S.k==="v"?INK:"#fff";ctx.fill();ctx.stroke();
+    // a finger dot that shows the drag
+    if(!drag){
+      const k=reduce?0:(clock%2200)/2200,e=k<.7?k/.7:1,q=1-e;
+      const px=q*q*mc.x+2*q*e*ctl.x+e*e*end.x,py=q*q*mc.y+2*q*e*ctl.y+e*e*end.y;
+      ctx.globalAlpha=k<.7?1:1-(k-.7)/.3;
+      ctx.beginPath();ctx.arc(X({x:px,y:py}),Y({x:px,y:py}),13*DPR,0,Math.PI*2);ctx.fillStyle="rgba(255,201,60,.95)";ctx.fill();ctx.lineWidth=3*DPR;ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  /* ---------- interaction ---------- */
+  function toModel(e){const r=cv.getBoundingClientRect(),s=W/r.width;
+    return {x:((e.clientX-r.left)*s-W/2)/SC(W),y:((e.clientY-r.top)*s-W/2)/SC(W)}}
+  function animateTo(target){
+    if(!cur)return;
+    if(reduce){t=target;if(t===1)commit();render();return}
+    const from=t,t0=performance.now(),dur=Math.max(180,Math.abs(target-from)*700);
+    anim={target};
+    (function tick(now){
+      const k=Math.min(1,(now-t0)/dur),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+      t=from+(target-from)*e;
+      if(k<1)requestAnimationFrame(tick);else{anim=null;t=target;if(target===1)commit()}
+    })(t0);
+  }
+  cv.addEventListener("pointerdown",e=>{
+    if(!cur||anim)return;
+    const p=toModel(e);drag={start:p,last:p,onFlap:cur.move.some(P=>inside(P.pts,p)),moved:0};
+    cv.setPointerCapture(e.pointerId);cv.classList.add("drag");
+  });
+  cv.addEventListener("pointermove",e=>{
+    if(!drag)return;
+    const p=toModel(e),{mc,mr}=cur,vx=mr.x-mc.x,vy=mr.y-mc.y;
+    drag.moved=Math.max(drag.moved,Math.hypot(p.x-drag.start.x,p.y-drag.start.y));
+    const f=Math.max(0,Math.min(1,((p.x-drag.start.x)*vx+(p.y-drag.start.y)*vy)/(vx*vx+vy*vy)));
+    t=Math.acos(1-2*f)/Math.PI;
+  });
+  const end=()=>{
+    if(!drag)return;cv.classList.remove("drag");
+    const d=drag;drag=null;
+    if(d.moved<.04){ if(d.onFlap)animateTo(1); return }
+    animateTo(t>.45?1:0);
+  };
+  cv.addEventListener("pointerup",end);cv.addEventListener("pointercancel",end);
+
+  /* ---------- UI ---------- */
+  function ui(){
+    const n=STEPS.length,done=step>=n;
+    sayEl.textContent=SAY[lang][Math.min(step,n)];
+    lblEl.textContent=done?(lang==="tr"?"Bitti!":"Done!"):(lang==="tr"?`Adım ${step+1} / ${n}`:`Step ${step+1} / ${n}`);
+    document.querySelectorAll("#stepbar i").forEach((el,i)=>{el.className=i<step?"done":i===step?"now":""});
+    const fb=document.getElementById("fgFold");fb.disabled=done;fb.style.opacity=done?.5:1;
+    winEl.hidden=!done;
+  }
+  function celebrate(){
+    if(reduce)return;
+    const cols=["#F7931E","#FFC93C","#1FA59A","#8A5CC2","#FF8FA8"];
+    confEl.innerHTML="";
+    for(let i=0;i<36;i++){const s=document.createElement("i");s.style.left=Math.random()*100+"%";s.style.background=cols[i%5];
+      s.style.animationDelay=Math.random()*.6+"s";s.style.transform=`rotate(${Math.random()*90}deg)`;confEl.appendChild(s)}
+    setTimeout(()=>confEl.innerHTML="",3400);
+  }
+  function reset(){
+    polys=[{pts:[{x:-1,y:0},{x:0,y:-1},{x:1,y:0},{x:0,y:1}],up:"A",tag:"base",z:0}];
+    step=0;t=0;anim=null;drag=null;confEl.innerHTML="";prepare();ui();
+  }
+  document.getElementById("fgFold").addEventListener("click",()=>{if(!anim)animateTo(1)});
+  document.getElementById("fgReset").addEventListener("click",reset);
+  document.querySelectorAll(".sw").forEach(b=>b.addEventListener("click",()=>{
+    color=b.dataset.col;document.querySelectorAll(".sw").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));
+  }));
+  function size(){DPR=Math.min(2,devicePixelRatio||1);const w=Math.round(board.clientWidth*DPR);if(w&&w!==W){W=w;cv.width=cv.height=W}}
+  new ResizeObserver(size).observe(board);
+  let visible=true;
+  new IntersectionObserver(es=>{visible=es[0].isIntersecting}).observe(board);
+  reset();
+  (function loop(now){clock=now;if(visible){size();render()}requestAnimationFrame(loop)})(0);
+  return {setLang(l){lang=l;ui()}};
+})();
+
+/* ---------- Oyun odası: tabs ---------- */
+const GAMES=["boya","balik","matematik"];
+function showGame(id,scroll){
+  document.querySelectorAll(".playpanel").forEach(p=>p.hidden=p.dataset.panel!==id);
+  document.querySelectorAll(".gtab").forEach(t=>t.setAttribute("aria-selected",t.dataset.game===id?"true":"false"));
+  if(id!=="matematik")MG.stop();
+  if(scroll)document.getElementById(id).scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
+}
+document.querySelectorAll(".gtab").forEach(t=>t.addEventListener("click",e=>{e.preventDefault();showGame(t.dataset.game,true)}));
+window.addEventListener("hashchange",()=>{const h=location.hash.slice(1);if(GAMES.includes(h))showGame(h,true)});
+
+/* ---------- Boyama: pen, bucket, eraser ---------- */
+const CB=(()=>{
+  const cv=document.getElementById("cbPaint"),ctx=cv.getContext("2d"),img=document.getElementById("cbLines");
+  const W=1382,H=817;cv.width=W;cv.height=H;
+  const COLORS=["#F7931E","#EE5A3A","#FFC93C","#C2D63A","#2FB36E","#1A9CC0","#12B8D8","#6B3FA0","#D4007F","#FF8FA8","#F4D6B0","#8B5A2B","#9AA3B5","#2B2240"];
+  let color=COLORS[0],tool="pen",size=24,barrier=null,undo=[],stroke=null;
+  const pal=document.getElementById("palette");
+  pal.innerHTML=COLORS.map((c,i)=>`<button class="pc" type="button" role="radio" style="--c:${c}" data-c="${c}" aria-checked="${i?"false":"true"}" aria-label="${c}"></button>`).join("");
+  pal.addEventListener("click",e=>{const b=e.target.closest(".pc");if(!b)return;color=b.dataset.c;
+    pal.querySelectorAll(".pc").forEach(x=>x.setAttribute("aria-checked",x===b?"true":"false"));if(tool==="eraser")setTool("pen")});
+  function setTool(t){tool=t;document.querySelectorAll(".tool").forEach(b=>b.setAttribute("aria-pressed",b.dataset.tool===t?"true":"false"))}
+  document.querySelectorAll(".tool").forEach(b=>b.addEventListener("click",()=>setTool(b.dataset.tool)));
+  document.querySelectorAll(".size").forEach(b=>b.addEventListener("click",()=>{size=+b.dataset.size;
+    document.querySelectorAll(".size").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));if(tool==="fill")setTool("pen")}));
+  // lines act as walls for the bucket
+  function buildBarrier(){
+    try{
+      const o=document.createElement("canvas");o.width=W;o.height=H;const c=o.getContext("2d");c.drawImage(img,0,0,W,H);
+      const d=c.getImageData(0,0,W,H).data,b=new Uint8Array(W*H);
+      for(let i=0;i<W*H;i++)if(d[i*4+3]>90)b[i]=1;
+      barrier=new Uint8Array(b);
+      for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++){const i=y*W+x;if(b[i])continue;if(b[i-1]||b[i+1]||b[i-W]||b[i+W])barrier[i]=1}
+    }catch(e){barrier=null}
+  }
+  if(img.complete&&img.naturalWidth)buildBarrier();else img.addEventListener("load",buildBarrier);
+  const hex=h=>[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
+  function save(){try{undo.push(ctx.getImageData(0,0,W,H));if(undo.length>20)undo.shift()}catch(e){}}
+  function fill(x,y){
+    if(!barrier)return;x=Math.floor(x);y=Math.floor(y);if(x<0||y<0||x>=W||y>=H||barrier[y*W+x])return;
+    save();
+    const im=ctx.getImageData(0,0,W,H),d=im.data,[r,g,b]=hex(color),seen=new Uint8Array(W*H),st=[[x,y]];
+    while(st.length){
+      let [cx,cy]=st.pop(),i=cy*W+cx;
+      while(cx>0&&!barrier[i-1]&&!seen[i-1]){cx--;i--}
+      let up=false,dn=false;
+      for(;cx<W&&!barrier[i]&&!seen[i];cx++,i++){
+        seen[i]=1;const k=i*4;d[k]=r;d[k+1]=g;d[k+2]=b;d[k+3]=255;
+        if(cy>0){const j=i-W;if(!barrier[j]&&!seen[j]){if(!up){st.push([cx,cy-1]);up=true}}else up=false}
+        if(cy<H-1){const j=i+W;if(!barrier[j]&&!seen[j]){if(!dn){st.push([cx,cy+1]);dn=true}}else dn=false}
+      }
+    }
+    ctx.putImageData(im,0,0);
+  }
+  const pos=e=>{const r=cv.getBoundingClientRect();return {x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height}};
+  function seg(a,b){
+    ctx.save();ctx.globalCompositeOperation=tool==="eraser"?"destination-out":"source-over";
+    ctx.strokeStyle=color;ctx.lineWidth=tool==="eraser"?size*1.6:size;ctx.lineCap=ctx.lineJoin="round";
+    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x+.01,b.y);ctx.stroke();ctx.restore();
+  }
+  cv.addEventListener("pointerdown",e=>{
+    const p=pos(e);
+    if(tool==="fill"){fill(p.x,p.y);return}
+    save();stroke=p;seg(p,p);cv.setPointerCapture(e.pointerId);
+  });
+  cv.addEventListener("pointermove",e=>{if(!stroke)return;const p=pos(e);seg(stroke,p);stroke=p});
+  const up=()=>{stroke=null};cv.addEventListener("pointerup",up);cv.addEventListener("pointercancel",up);
+  document.getElementById("cbUndo").addEventListener("click",()=>{const s=undo.pop();if(s)ctx.putImageData(s,0,0)});
+  const conf=document.getElementById("cbConfirm");
+  document.getElementById("cbClear").addEventListener("click",()=>{conf.hidden=false});
+  document.getElementById("cbNo").addEventListener("click",()=>{conf.hidden=true});
+  document.getElementById("cbYes").addEventListener("click",()=>{save();ctx.clearRect(0,0,W,H);conf.hidden=true});
+  // save the colored page (works on the published site; hidden inside the preview)
+  document.getElementById("cbSave").addEventListener("click",()=>{
+    const o=document.createElement("canvas");o.width=W;o.height=H;const c=o.getContext("2d");
+    c.fillStyle="#fff";c.fillRect(0,0,W,H);c.drawImage(cv,0,0);c.drawImage(img,0,0,W,H);
+    o.toBlob(bl=>{const a=document.createElement("a");a.href=URL.createObjectURL(bl);a.download="paperkun-boyama.png";
+      document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)},"image/png");
+  });
+  return {};
+})();
+
+/* ---------- Paperkun Düşünüyor: 10-second math ---------- */
+const MG=(()=>{
+  const $=id=>document.getElementById(id);
+  const kun=$("mgKun"),q=$("mgQ"),ans=$("mgAns"),msg=$("mgMsg"),bar=$("mgBar"),sec=$("mgSec"),startBox=$("mgStart"),go=$("mgGo");
+  const stars=[...document.querySelectorAll("#mgStars i")],GOAL=5,TIME=10000;
+  const IMG_THINK="img/paperkun-dusunuyor.webp",IMG_HAPPY="img/paperkun.webp";
+  const T={
+    tr:{pick:"Hangisi doğru? Paperkun'a yardım et!",right:"Doğru! Paperkun çok mutlu.",wrong:n=>`Olmadı. Doğrusu ${n}. Bir sonrakini bilirsin!`,
+        late:n=>`Süre doldu! Doğrusu ${n}.`,win:k=>`Başardın! 5 soruyu doğru bildin. Toplam ${k} soru sordum.`,again:"Tekrar oyna",yay:"Yaşasın!"},
+    en:{pick:"Which one is right? Help Paperkun!",right:"Correct! Paperkun is so happy.",wrong:n=>`Not quite. It's ${n}. You'll get the next one!`,
+        late:n=>`Time's up! It's ${n}.`,win:k=>`You did it! 5 correct answers. I asked ${k} questions in total.`,again:"Play again",yay:"Hooray!"}};
+  const L=()=>T[typeof LANG!=="undefined"?LANG:"tr"];
+  let max=10,correct=0,asked=0,cur=null,t0=0,raf=0,busy=false,last="",wait=0;
+  const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+  document.querySelectorAll(".lvl").forEach(b=>b.addEventListener("click",()=>{max=+b.dataset.max;
+    document.querySelectorAll(".lvl").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"))}));
+  function gen(){
+    let a,b,op,key;
+    do{op=Math.random()<.55?"+":"−";
+      if(op==="+"){a=rnd(1,max-1);b=rnd(1,max-a)}else{a=rnd(2,max);b=rnd(1,a-1)}
+      key=a+op+b}while(key===last);
+    last=key;return {a,b,op,ans:op==="+"?a+b:a-b};
+  }
+  function setTimer(f){bar.style.transform=`scaleX(${f})`;bar.classList.toggle("low",f<.3);sec.textContent=Math.ceil(f*TIME/1000)}
+  function tick(now){const f=Math.max(0,1-(now-t0)/TIME);setTimer(f);if(f<=0){answer(null);return}raf=requestAnimationFrame(tick)}
+  function next(){
+    cur=gen();asked++;busy=false;
+    kun.src=IMG_THINK;kun.classList.remove("happy");
+    q.textContent=`${cur.a} ${cur.op} ${cur.b} = ?`;msg.textContent=L().pick;
+    const opts=new Set([cur.ans]);
+    while(opts.size<4){const v=cur.ans+rnd(-3,3);if(v>=0&&v<=max+3)opts.add(v)}
+    const list=[...opts].sort(()=>Math.random()-.5);
+    ans.innerHTML=list.map(v=>`<button class="btn paper" type="button" data-v="${v}">${v}</button>`).join("");
+    t0=performance.now();cancelAnimationFrame(raf);raf=requestAnimationFrame(tick);
+  }
+  function answer(btn){
+    if(busy||!cur)return;busy=true;cancelAnimationFrame(raf);
+    const v=btn?+btn.dataset.v:null,ok=v===cur.ans;
+    ans.querySelectorAll("button").forEach(b=>{b.disabled=true;if(+b.dataset.v===cur.ans)b.classList.add("right")});
+    q.textContent=`${cur.a} ${cur.op} ${cur.b} = ${cur.ans}`;
+    if(ok){
+      correct++;stars[correct-1].classList.add("on");msg.textContent=L().right;
+      kun.src=IMG_HAPPY;kun.classList.add("happy");
+      wait=setTimeout(correct>=GOAL?win:next,1100);
+    }else{
+      if(btn)btn.classList.add("wrong");
+      msg.textContent=btn?L().wrong(cur.ans):L().late(cur.ans);
+      wait=setTimeout(next,1800);
+    }
+  }
+  ans.addEventListener("click",e=>{const b=e.target.closest("button");if(b)answer(b)});
+  function win(){
+    cur=null;q.textContent=L().yay;msg.textContent=L().win(asked);ans.innerHTML="";
+    kun.src=IMG_HAPPY;go.textContent=L().again;startBox.hidden=false;setTimer(1);
+    if(!matchMedia("(prefers-reduced-motion: reduce)").matches){
+      const box=$("mgConf"),cols=["#F7931E","#FFC93C","#1A9CC0","#8A5CC2","#FF8FA8"];box.innerHTML="";
+      for(let i=0;i<36;i++){const s=document.createElement("i");s.style.left=Math.random()*100+"%";s.style.background=cols[i%5];s.style.animationDelay=Math.random()*.6+"s";box.appendChild(s)}
+      setTimeout(()=>box.innerHTML="",3400);
+    }
+  }
+  go.addEventListener("click",()=>{correct=0;asked=0;stars.forEach(s=>s.classList.remove("on"));startBox.hidden=true;next()});
+  function stop(){
+    cancelAnimationFrame(raf);clearTimeout(wait);cur=null;busy=false;ans.innerHTML="";startBox.hidden=false;
+    q.textContent="?";kun.src=IMG_THINK;setTimer(1);
+  }
+  setTimer(1);
+  return {stop};
+})();
+{const h=location.hash.slice(1);showGame(GAMES.includes(h)?h:"boya",GAMES.includes(h))}
+
+/* ---------- TR / EN ---------- */
+const EN={
+  eps_m:"Episodes · 5 episodes",eps_h:"Paperkun's adventures",songs_m:"Songs · 14 songs",ep2_m:"New episode",
+  g1:"Coloring",g1p:"Color Paperkun's friends any way you like.",g1b:"Color",g4:"Paperkun Is Thinking",g4p:"Solve the sum in 10 seconds and help Paperkun.",g4b:"Play",
+  cb_badge:"Coloring page",cb_title:"Paperkun's friends",cb_pen:"Pen",cb_fill:"Bucket",cb_eraser:"Eraser",cb_undo:"Undo",cb_clear:"Clear",
+  cb_save:"Save picture",cb_sure:"Erase all the colors?",cb_yes:"Yes, erase",cb_no:"Cancel",
+  mg_intro:"Paperkun is thinking of a sum but can't find the answer. Tap the right answer within 10 seconds to help!",mg_easy:"Up to 10",mg_hard:"Up to 20",mg_go:"Start!",
+    nav_izle:"Watch",nav_katla:"Fold",nav_oku:"Read",nav_oyna:"Play",
+  hero_a:"Hi, I'm",hero_p:"I'm made of paper. Fold me and I can become a leaf, a star, even a box. Watch, fold, read and play with me!",
+  cta_izle:"Watch episodes",cta_katla:"Start folding",bubble:"Hello!",
+  d_izle:"Cartoon episodes and songs",d_katla:"Origami step by step",d_oku:"Picture books",d_oyna:"Coloring and games",go:"Let's go!",
+  l_izle:"Paperkun TV",h_izle:"Watch the episodes",p_izle:"In every episode Paperkun turns into a new shape. What will it be today?",yt_all:"YouTube channel",
+  ep1_m:"Episode 1",ep1:"Paperkun Becomes a Leaf",songs:"Sing with Paperkun",soon:"Coming soon!",ep2:"A new adventure is folding…",
+  l_katla:"Origami workshop",h_katla:"Let's fold!",p_katla:"Ready to change shape like Paperkun? Grab your paper and follow Paperkun.",
+  lab_h:"Try it first!",fold:"Fold!",unfold:"Unfold",valley:"Valley fold",mountain:"Mountain fold",arrow:"Fold direction",
+  l_oku:"Bookshelf",h_oku:"Read with Paperkun",p_oku:"Flip through our picture books page by page on screen.",picbook:"Picture book",
+  book_p:"On a windy day, Paperkun decides to become a leaf. After reading, you can fold the leaf too!",read:"Read the book",fold_leaf:"Fold the leaf",
+  l_oyna:"Playroom",h_oyna:"Play with Paperkun",p_oyna:"Color, have fun, play with friends.",
+  g2:"Mini games",g2p:"Fold the paper along the dashed lines and make your fish.",g2b:"Fold",
+  fg_badge:"Mini game",fg_title:"Fold a Fish",fg_win:"You did it!",fg_win2:"You folded a great fish.",fg_help:"Show me",fg_reset:"Start over",fg_color:"Paper color:",
+  g3:"Board game",g3p:"A Paperkun board game for the whole family.",
+  l_par:"For parents and teachers",par_h:"What is Paperkun?",
+  par_p1:"Paperkun is a cartoon character made of paper who changes shape by folding. Through cartoons, picture books and origami activities, Paperkun invites children to step away from the screen and make something with their hands.",
+  par_p2:"You can use the folding pages in class or at home with a single square sheet of paper.",
+  contact_h:"Write to us",contact_p:"For collaborations, school events and other questions:",copy:"Copy",copied:"Copied!",tag:"Cartoons, books and games for children"
+};
+const TR={};
+document.querySelectorAll("[data-i18n]").forEach(el=>{TR[el.dataset.i18n]??=el.textContent});
+function setLang(l){
+  LANG=l;document.documentElement.lang=l;
+  const d=l==="en"?EN:TR;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{const v=d[el.dataset.i18n];if(v)el.textContent=v});
+  document.getElementById("langBtn").textContent=l==="tr"?"EN":"TR";
+  renderModels();paintStep();FG.setLang(l);
+  try{localStorage.setItem("pk-lang",l)}catch(e){}
+}
+document.getElementById("langBtn").addEventListener("click",()=>setLang(LANG==="tr"?"en":"tr"));
+let saved="tr";try{saved=localStorage.getItem("pk-lang")||"tr"}catch(e){}
+setLang(saved);
+</script>
+</body>
+</html>
